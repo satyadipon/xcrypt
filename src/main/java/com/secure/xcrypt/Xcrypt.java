@@ -22,6 +22,7 @@ public class Xcrypt {
 	SecretKey key;
 
 	public Xcrypt() throws Exception {
+		System.out.println(ConfXcrypt.getProperty("$privatekey"));
 		myEncryptionKey = getString(ConfXcrypt.getProperty("$privatekey")).toLowerCase();
 		myEncryptionScheme = DESEDE_ENCRYPTION_SCHEME;
 		arrayBytes = myEncryptionKey.getBytes(UNICODE_FORMAT);
@@ -71,5 +72,6 @@ public class Xcrypt {
 		return result;
 
 	}
+	
 
 }
