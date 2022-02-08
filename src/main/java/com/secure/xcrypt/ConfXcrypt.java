@@ -8,8 +8,8 @@ import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class UserConfig {
-	private static Logger logger = LogManager.getLogger(UserConfig.class);
+public class ConfXcrypt {
+	private static Logger logger = LogManager.getLogger(ConfXcrypt.class);
 
 	private static final Properties properties = new Properties();
 	private static final String environmentPrefix;

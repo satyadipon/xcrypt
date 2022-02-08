@@ -22,7 +22,7 @@ public class Xcrypt {
 	SecretKey key;
 
 	public Xcrypt() throws Exception {
-		myEncryptionKey = getString(UserConfig.getProperty("$privatekey")).toLowerCase();
+		myEncryptionKey = getString(ConfXcrypt.getProperty("$privatekey")).toLowerCase();
 		myEncryptionScheme = DESEDE_ENCRYPTION_SCHEME;
 		arrayBytes = myEncryptionKey.getBytes(UNICODE_FORMAT);
 		ks = new DESedeKeySpec(arrayBytes);
