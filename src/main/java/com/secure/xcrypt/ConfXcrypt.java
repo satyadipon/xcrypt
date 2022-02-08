@@ -1,65 +1,20 @@
 package com.secure.xcrypt;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.secrets.xkeys.Keys;
 
-public class ConfXcrypt {
-	private static Logger logger = LogManager.getLogger(ConfXcrypt.class);
-
-	private static final Properties properties = new Properties();
-
-
-	/* initialise data, the key defaults to this when none is specified at command line */
-	static {
-		initPropertiesFromFile();
-	}
-
-	private static void initPropertiesFromFile() {
-
-		File file = new File("conf.properties");
-
-
-		logger.info("User properties file path: {}", file.toPath());
-
-		InputStream input = null;
-		try {
-			input = ConfXcrypt.class.getClassLoader().getResourceAsStream("conf.properties");
-
-			if (input == null) {
-				throw new Exception("Sorry, unable to find config.properties");
-			}
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
+public class ConfXcrypt extends Keys {
+	
+	protected static String getKey() throws Exception {
+		String result = new String();
+		char[] charArray = Keys.privatekey.toCharArray();
+		for(int i = 0; i < charArray.length; i=i+2) {
+			String st = ""+charArray[i]+""+charArray[i+1];
+			char ch = (char)Integer.parseInt(st, 16);
+			result = result + ch;
 		}
 
-		//load properties file
-		try {
-			properties.load(input);
-			input.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		return result;
 
-	}
-
-	public static String getProperty(String s) {
-
-		if(s.contains("$"))
-		{
-			s=s.substring(1);
-			return properties.getProperty(s);
-		}
-		else
-			return s;
 	}
 
 }
-

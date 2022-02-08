@@ -8,11 +8,11 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
 import org.apache.commons.codec.binary.Base64;
 
-public class Xcrypt {
+public class Xcrypt extends ConfXcrypt{
 
 
 	private static final String UNICODE_FORMAT = "UTF-8";
-	public static final String DESEDE_ENCRYPTION_SCHEME = "DESede";
+	private static final String DESEDE_ENCRYPTION_SCHEME = "DESede";
 	private KeySpec ks;
 	private SecretKeyFactory skf;
 	private Cipher cipher;
@@ -22,8 +22,7 @@ public class Xcrypt {
 	SecretKey key;
 
 	public Xcrypt() throws Exception {
-		System.out.println(ConfXcrypt.getProperty("$privatekey"));
-		myEncryptionKey = getString(ConfXcrypt.getProperty("$privatekey")).toLowerCase();
+		myEncryptionKey = ConfXcrypt.getKey();
 		myEncryptionScheme = DESEDE_ENCRYPTION_SCHEME;
 		arrayBytes = myEncryptionKey.getBytes(UNICODE_FORMAT);
 		ks = new DESedeKeySpec(arrayBytes);
@@ -59,19 +58,5 @@ public class Xcrypt {
 		}
 		return decryptedText;
 	}
-
-	private String getString(String str) throws Exception {
-		String result = new String();
-		char[] charArray = str.toCharArray();
-		for(int i = 0; i < charArray.length; i=i+2) {
-			String st = ""+charArray[i]+""+charArray[i+1];
-			char ch = (char)Integer.parseInt(st, 16);
-			result = result + ch;
-		}
-
-		return result;
-
-	}
 	
-
 }
